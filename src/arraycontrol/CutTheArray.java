@@ -6,12 +6,17 @@ package arraycontrol;
 import java.util.Scanner;
 public class CutTheArray {
     public static void main(String[] args){
-        int[] list_new = cutTheCopy(setTheArray());
-        printTheArray(list_new);
+//        int[] list_new = cutTheCopy(setTheArray());
+//        printTheArray(list_new);
+        int[] ints = cutDuplicates(new int[]{3, 3, 5, 6, 7, 7, 7, 5});
+        for (int anInt : ints) {
+            System.out.print(anInt + " ");
+        }
+
     }
 
     //cutTheCopy:去重函数
-    static int[] cutTheCopy(int[] arr){
+    private static int[] cutTheCopy(int[] arr){ // todo: 最好加上修饰符，默认修饰符为包可用，没有啥意义
 
         //临时变量用于得出去重后数组的长度
         int length_new = 0;
@@ -27,7 +32,7 @@ public class CutTheArray {
                     break;
                 }
             }
-            if(flag == true){
+            if(flag){  // todo： 不用写成 flag == true 多余了
                 temp[length_new] = arr[i];
                 length_new += 1;
             }
@@ -63,6 +68,37 @@ public class CutTheArray {
         for(int i = 0;i < arr.length;i++){
             System.out.print(arr[i] + " ");
         }
+    }
+
+
+
+
+
+    // todo：以下这种的思路是map key的思路，要稍微注意以下
+    // 另外，在你用到什么重置的时候就要想一下了，其实可以用一个方法代替，而不是设定来设定去
+    // todo: 其中隐藏了一个bug，请查收并修改
+    private static int[] cutDuplicates(int[] source) {
+        int[] temp = new int[source.length];
+        int length = 0;
+        for (int i : source) {
+            if (!isDuplicates(i, temp)) {
+                temp[length++] = i;
+            }
+        }
+        int[] result = new int[length];
+        System.arraycopy(temp, 0, result, 0, length);
+        return result;
+    }
+
+    private static boolean isDuplicates(int target, int[] source) {
+        boolean flag = false;
+        for (int i : source) {
+            if (target == i) {
+                flag = true;
+                break;
+            }
+        }
+        return flag;
     }
 }
 
